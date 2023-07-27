@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Country Selection</title>
+  <style>
+    /* Add your custom CSS styles here */
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(130, 129, 129, 0.721);
+      border-radius: 20px;
+      box-shadow: 2px 5px #f2f2f2;
+    }
+
+    .grid-view {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: auto auto auto;
+      gap: 10px;
+    }
+
+    .grid-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 10px;
+      background-color: #f2f2f2;
+      border-radius: 5px;
+      margin: 5px;
+    }
+.delete-btn{
+  background-color: brown;
+  color: rgb(243, 239, 239);
+}
+.edit-btn{
+  background-color: seagreen;
+  color: #f9f9f9;
+}
+    .delete-btn,
+    .edit-btn {
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .search-box {
+      margin-top: 20px;
+    }
+
+    .dropbox {
+      width: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <input type="text" id="country-select" class="search-box" placeholder="Search...">
+    <div class="dropbox">
+
+      <label for="country-select">Select a country:</label>
+
+      <select id="country-list">
+        <!-- Predefined list of countries -->
+        <option value="usa">USA</option>
+        <option value="canada">Canada</option>
+        <option value="uk">UK</option>
+        <!-- Add more options here -->
+      </select>
+    </div>
+    <div class="grid-view" id="grid-view">
+
+      <!-- Selected items will be added here dynamically -->
+    </div>
+  </div>
+
+  <script>
+    // JavaScript code to handle user interactions and update the grid-view
+    const countrySelect = document.getElementById('country-select');
+    const countryList = document.getElementById('country-list');
+    const gridView = document.getElementById('grid-view');
+
+    // Add event listener to the dropdown to handle item selection
+    countryList.addEventListener('change', () => {
+      const selectedCountry = countryList.value;
+      if (selectedCountry) {
+        addCountryToGridView(selectedCountry);
+      }
+    });
+
+    // Add event listener to the search box to filter dropdown options
+    countrySelect.addEventListener('input', () => {
+      const searchKeyword = countrySelect.value.toLowerCase();
+      Array.from(countryList.options).forEach(option => {
+        const optionText = option.textContent.toLowerCase();
+        // option.style.display = optionText.includes(searchKeyword) ? 'block' : 'none';
+      });
+    });
+
+    // Function to add a new item to the grid-view
+    function addCountryToGridView(countryName) {
+      const gridItem = document.createElement('div');
+      gridItem.className = 'grid-item';
+      gridItem.innerHTML = `
+     <span>${countryName}</span>
+        <button class="delete-btn">Delete</button>
+        <button class="edit-btn">Edit</button>
+      `;
+      gridView.appendChild(gridItem);
+
+      // Add event listeners to the delete and edit buttons
+      const deleteButton = gridItem.querySelector('.delete-btn');
+      const editButton = gridItem.querySelector('.edit-btn');
+
+      deleteButton.addEventListener('click', () => {
+        gridView.removeChild(gridItem);
+      });
+
+      editButton.addEventListener('click', () => {
+        // Implement your edit logic here
+        // For simplicity, this example doesn't include edit functionality
+        alert('Edit functionality is not implemented in this example.');
+      });
+    }
+  </script>
+</body>
+
+</html>
